@@ -1,17 +1,1 @@
-[
-  {
-    "slug": "open-source-spectrometer",
-    "title": "Open-Source UV-Vis Spectrometer",
-    "kind": "hardware",
-    "year": "2023",
-    "tagline": "Sub-$200 spectrometer with replaceable diffraction grating.",
-    "summary": "A teaching-grade spectrometer designed for undergrad chem labs. Linear CCD, machined aluminum body, USB-C interface, with calibration software that runs in the browser.",
-    "tags": [
-      "Optics",
-      "CCD",
-      "Mechanical",
-      "Education"
-    ],
-    "status": "archived"
-  }
-]
+[]
