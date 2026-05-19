@@ -1,29 +1,5 @@
 [
   {
-    "slug": "self-describing-peripherals",
-    "title": "Self-Describing Peripherals: A Lightweight Schema for Modular Embedded Systems",
-    "year": "2025",
-    "venue": "Workshop on Embedded Systems Design (WESD)",
-    "authors": [
-      "Your Name",
-      "Co-Author A"
-    ],
-    "abstract": "We present a 256-byte descriptor format for embedded peripherals that allows a host MCU to enumerate, configure, and validate attached modules without recompilation. We evaluate the approach on a 4-axis motion controller and demonstrate that self-description reduces integration time by 80% versus static configuration.",
-    "tags": [
-      "Embedded",
-      "Modularity",
-      "Systems"
-    ],
-    "pdf": "",
-    "links": [
-      {
-        "label": "DOI",
-        "url": "https://doi.org"
-      }
-    ],
-    "featured": true
-  },
-  {
     "slug": "crdt-formatting-marks",
     "title": "Decoupling Marks from Content in Collaborative Rich-Text",
     "year": "2024",
