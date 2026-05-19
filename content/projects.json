@@ -1,21 +1,5 @@
 [
   {
-    "slug": "modular-cnc-controller",
-    "title": "Modular CNC Controller",
-    "kind": "hardware",
-    "year": "2025",
-    "tagline": "STM32-based motion controller with hot-swappable axis modules.",
-    "summary": "A 4-axis CNC controller built around an STM32H7, with modular daughter-boards for stepper, servo, and spindle control. Each module advertises its capabilities over a small I2C handshake so the firmware can self-configure on boot.",
-    "body": "## Why\n\nOff-the-shelf controllers either lock you into a vendor's stack or require you to recompile firmware every time you swap a motor. I wanted the hardware to describe itself.\n\n## How\n\nEach axis module carries a tiny EEPROM with a JSON-like descriptor: motor type, encoder resolution, current limit, thermal envelope. On boot, the host enumerates them and builds a motion plan accordingly. The PCB stack is 4-layer with isolated power planes for the drivers.\n\n## What I learned\n\nElectrical isolation between logic and motor power is non-negotiable. The first prototype lost an MCU to a back-EMF spike. The second one didn't.",
-    "tags": ["STM32", "PCB", "Motion control", "Firmware"],
-    "links": [
-      { "label": "Schematics", "url": "https://github.com/your-handle/cnc" },
-      { "label": "Demo video", "url": "https://example.com" }
-    ],
-    "status": "wip",
-    "featured": true
-  },
-  {
     "slug": "weft-realtime-collab",
     "title": "Weft",
     "kind": "software",
@@ -23,9 +7,18 @@
     "tagline": "Real-time collaborative editor with CRDT-backed offline support.",
     "summary": "A document editor that stays usable offline and converges cleanly when you reconnect. Built on Yjs with a custom binding layer for rich-text and a Rust backend for persistence.",
     "body": "## Why\n\nMost \"collaborative\" editors fall apart the moment your wifi drops. Weft treats offline as a first-class state, not an error.\n\n## How\n\nThe client is a thin React shell over a Yjs document. Edits propagate through a WebRTC mesh when peers are reachable, falling back to a Rust relay that buffers updates and forwards them on reconnect. The relay stores compressed snapshots in Postgres so cold starts are fast.\n\n## What I learned\n\nCRDTs are easy to reason about until you add formatting. Then they're hard. The fix was modeling marks as separate metadata streams instead of inline attributes.",
-    "tags": ["TypeScript", "Rust", "CRDT", "Yjs", "WebRTC"],
+    "tags": [
+      "TypeScript",
+      "Rust",
+      "CRDT",
+      "Yjs",
+      "WebRTC"
+    ],
     "links": [
-      { "label": "GitHub", "url": "https://github.com/your-handle/weft" }
+      {
+        "label": "GitHub",
+        "url": "https://github.com/your-handle/weft"
+      }
     ],
     "status": "shipped",
     "featured": true
@@ -37,7 +30,12 @@
     "year": "2024",
     "tagline": "Dry-electrode 4-channel EEG with onboard ML inference.",
     "summary": "A discreet headband that captures EEG without conductive gel and runs lightweight inference on-device for focus-state classification. Streams summaries — not raw signal — over BLE to preserve privacy.",
-    "tags": ["BLE", "DSP", "Embedded ML", "Wearable"],
+    "tags": [
+      "BLE",
+      "DSP",
+      "Embedded ML",
+      "Wearable"
+    ],
     "links": [],
     "status": "wip"
   },
@@ -48,9 +46,17 @@
     "year": "2023",
     "tagline": "Build-time full-text search for static sites — zero runtime servers.",
     "summary": "A small CLI that indexes your static site at build time and ships a tiny WASM searcher so users get instant search without a backend. Indexes typically compress to under 100KB for sites with thousands of pages.",
-    "tags": ["Rust", "WASM", "Search", "Static sites"],
+    "tags": [
+      "Rust",
+      "WASM",
+      "Search",
+      "Static sites"
+    ],
     "links": [
-      { "label": "Crate", "url": "https://crates.io" }
+      {
+        "label": "Crate",
+        "url": "https://crates.io"
+      }
     ],
     "status": "shipped"
   },
@@ -61,7 +67,12 @@
     "year": "2023",
     "tagline": "Sub-$200 spectrometer with replaceable diffraction grating.",
     "summary": "A teaching-grade spectrometer designed for undergrad chem labs. Linear CCD, machined aluminum body, USB-C interface, with calibration software that runs in the browser.",
-    "tags": ["Optics", "CCD", "Mechanical", "Education"],
+    "tags": [
+      "Optics",
+      "CCD",
+      "Mechanical",
+      "Education"
+    ],
     "status": "archived"
   }
 ]
