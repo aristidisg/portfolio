@@ -1,26 +1,5 @@
 [
   {
-    "slug": "pageant-static-search",
-    "title": "Pageant",
-    "kind": "software",
-    "year": "2023",
-    "tagline": "Build-time full-text search for static sites — zero runtime servers.",
-    "summary": "A small CLI that indexes your static site at build time and ships a tiny WASM searcher so users get instant search without a backend. Indexes typically compress to under 100KB for sites with thousands of pages.",
-    "tags": [
-      "Rust",
-      "WASM",
-      "Search",
-      "Static sites"
-    ],
-    "links": [
-      {
-        "label": "Crate",
-        "url": "https://crates.io"
-      }
-    ],
-    "status": "shipped"
-  },
-  {
     "slug": "open-source-spectrometer",
     "title": "Open-Source UV-Vis Spectrometer",
     "kind": "hardware",
