@@ -3,9 +3,11 @@
 import { useState } from 'react';
 import { useContent } from '../ContentProvider';
 import { TextArea, TextField } from './fields';
+import { useSync } from './SyncProvider';
 
 export function SiteTab() {
-  const { content, updateSite } = useContent();
+  const { content } = useContent();
+  const { publishSite: updateSite } = useSync();
   const [draft, setDraft] = useState(content.site);
   const update = <K extends keyof typeof draft>(key: K, value: (typeof draft)[K]) =>
     setDraft((d) => ({ ...d, [key]: value }));

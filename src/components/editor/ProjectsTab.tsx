@@ -5,9 +5,11 @@ import { useContent } from '../ContentProvider';
 import type { Project } from '@/lib/types';
 import { ensureUniqueSlug, slugify } from '@/lib/slug';
 import { ProjectForm } from './ProjectForm';
+import { useSync } from './SyncProvider';
 
 export function ProjectsTab() {
-  const { content, updateProjects } = useContent();
+  const { content } = useContent();
+  const { publishProjects: updateProjects } = useSync();
   const [editingSlug, setEditingSlug] = useState<string | null>(null);
 
   const editing = editingSlug

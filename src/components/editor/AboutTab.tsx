@@ -3,9 +3,11 @@
 import { useState } from 'react';
 import { useContent } from '../ContentProvider';
 import { LinksField, TextArea, TextField } from './fields';
+import { useSync } from './SyncProvider';
 
 export function AboutTab() {
-  const { content, updateAbout } = useContent();
+  const { content } = useContent();
+  const { publishAbout: updateAbout } = useSync();
   const [draft, setDraft] = useState(content.about);
 
   const update = <K extends keyof typeof draft>(key: K, value: (typeof draft)[K]) =>

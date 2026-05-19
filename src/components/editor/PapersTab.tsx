@@ -5,9 +5,11 @@ import { useContent } from '../ContentProvider';
 import type { Paper } from '@/lib/types';
 import { ensureUniqueSlug, slugify } from '@/lib/slug';
 import { PaperForm } from './PaperForm';
+import { useSync } from './SyncProvider';
 
 export function PapersTab() {
-  const { content, updatePapers } = useContent();
+  const { content } = useContent();
+  const { publishPapers: updatePapers } = useSync();
   const [editingSlug, setEditingSlug] = useState<string | null>(null);
 
   const editing = editingSlug

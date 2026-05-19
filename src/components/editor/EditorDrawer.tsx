@@ -7,14 +7,16 @@ import { PapersTab } from './PapersTab';
 import { AboutTab } from './AboutTab';
 import { SiteTab } from './SiteTab';
 import { ExportTab } from './ExportTab';
+import { GitHubTab } from './GitHubTab';
 
-type Tab = 'projects' | 'papers' | 'about' | 'site' | 'export';
+type Tab = 'projects' | 'papers' | 'about' | 'site' | 'github' | 'export';
 
 const tabs: { key: Tab; label: string }[] = [
   { key: 'projects', label: 'Projects' },
   { key: 'papers', label: 'Papers' },
   { key: 'about', label: 'About' },
   { key: 'site', label: 'Site' },
+  { key: 'github', label: 'GitHub' },
   { key: 'export', label: 'Export ↓' },
 ];
 
@@ -69,6 +71,7 @@ export function EditorDrawer({ onClose }: { onClose: () => void }) {
           {tab === 'papers' && <PapersTab />}
           {tab === 'about' && <AboutTab />}
           {tab === 'site' && <SiteTab />}
+          {tab === 'github' && <GitHubTab />}
           {tab === 'export' && <ExportTab />}
         </div>
       </aside>
