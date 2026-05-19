@@ -1,8 +1,9 @@
 import { PaperDetail } from '@/components/PaperDetail';
 import { bakedContent, getPaperBySlug } from '@/lib/content';
 
-export function generateStaticParams() {
-  return bakedContent.papers.map((p) => ({ slug: p.slug }));
+export async function generateStaticParams() {
+  const params = bakedContent.papers.map((p) => ({ slug: p.slug }));
+  return params.length > 0 ? params : [{ slug: '_empty' }];
 }
 
 export const dynamicParams = false;
