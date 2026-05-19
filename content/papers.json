@@ -1,22 +1,5 @@
 [
   {
-    "slug": "low-cost-spectroscopy-education",
-    "title": "Low-Cost Spectroscopy for Undergraduate Education: Design and Field Results",
-    "year": "2023",
-    "venue": "Journal of Chemical Education",
-    "authors": [
-      "Your Name",
-      "Co-Author B",
-      "Co-Author C"
-    ],
-    "abstract": "We describe the design and classroom evaluation of an open-source UV-Vis spectrometer costing under $200 per unit. Across three semesters and 142 students, instrument-derived absorbance values agreed with commercial reference instruments to within 3.1% RMSE across the 400–700 nm range.",
-    "tags": [
-      "Education",
-      "Optics",
-      "Open hardware"
-    ]
-  },
-  {
     "slug": "untitled-paper",
     "title": "Untitled paper",
     "year": "2026",
