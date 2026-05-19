@@ -19,12 +19,12 @@ function applyTheme(t: Theme) {
 }
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
-  // Default to dark for SSR; the inline script in layout already set the real value
-  const [theme, setThemeState] = useState<Theme>('dark');
+  // Default to light for SSR; the inline script in layout already set the real value
+  const [theme, setThemeState] = useState<Theme>('light');
 
   // Sync state from DOM after mount (script already wrote the right attr)
   useEffect(() => {
-    const current = (document.documentElement.getAttribute('data-theme') as Theme | null) || 'dark';
+    const current = (document.documentElement.getAttribute('data-theme') as Theme | null) || 'light';
     setThemeState(current);
   }, []);
 
@@ -61,12 +61,11 @@ export const THEME_INIT_SCRIPT = `
 (function() {
   try {
     var stored = localStorage.getItem('${STORAGE_KEY}');
-    var t = stored === 'light' || stored === 'dark'
-      ? stored
-      : (window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+    // Light is the default; we only respect an explicitly stored preference.
+    var t = stored === 'dark' ? 'dark' : 'light';
     document.documentElement.setAttribute('data-theme', t);
   } catch (e) {
-    document.documentElement.setAttribute('data-theme', 'dark');
+    document.documentElement.setAttribute('data-theme', 'light');
   }
 })();
 `;
