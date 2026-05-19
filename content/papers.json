@@ -1,0 +1,36 @@
+[
+  {
+    "slug": "self-describing-peripherals",
+    "title": "Self-Describing Peripherals: A Lightweight Schema for Modular Embedded Systems",
+    "year": "2025",
+    "venue": "Workshop on Embedded Systems Design (WESD)",
+    "authors": ["Your Name", "Co-Author A"],
+    "abstract": "We present a 256-byte descriptor format for embedded peripherals that allows a host MCU to enumerate, configure, and validate attached modules without recompilation. We evaluate the approach on a 4-axis motion controller and demonstrate that self-description reduces integration time by 80% versus static configuration.",
+    "tags": ["Embedded", "Modularity", "Systems"],
+    "pdf": "",
+    "links": [
+      { "label": "DOI", "url": "https://doi.org" }
+    ],
+    "featured": true
+  },
+  {
+    "slug": "crdt-formatting-marks",
+    "title": "Decoupling Marks from Content in Collaborative Rich-Text",
+    "year": "2024",
+    "venue": "Workshop on Programming Models for Distributed Systems",
+    "authors": ["Your Name"],
+    "abstract": "Existing CRDT designs for rich-text store formatting marks inline with content, leading to ambiguous convergence under concurrent style edits. We propose modeling marks as a separate metadata CRDT, indexed by stable content anchors, and show that this eliminates a class of merge anomalies present in mainstream implementations.",
+    "tags": ["CRDT", "Distributed systems", "Collaborative editing"],
+    "pdf": "",
+    "featured": true
+  },
+  {
+    "slug": "low-cost-spectroscopy-education",
+    "title": "Low-Cost Spectroscopy for Undergraduate Education: Design and Field Results",
+    "year": "2023",
+    "venue": "Journal of Chemical Education",
+    "authors": ["Your Name", "Co-Author B", "Co-Author C"],
+    "abstract": "We describe the design and classroom evaluation of an open-source UV-Vis spectrometer costing under $200 per unit. Across three semesters and 142 students, instrument-derived absorbance values agreed with commercial reference instruments to within 3.1% RMSE across the 400–700 nm range.",
+    "tags": ["Education", "Optics", "Open hardware"]
+  }
+]
