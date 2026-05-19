@@ -11,7 +11,7 @@ import {
 } from 'react';
 import { useContent } from '../ContentProvider';
 import { useAuth } from './AuthProvider';
-import { getFile, putFile, GitHubApiError } from '@/lib/github-api';
+import { getFile, putBinaryFile, putFile, GitHubApiError } from '@/lib/github-api';
 import { REPO_CONFIG, type RepoFileKey } from '@/lib/repo-config';
 import type { About, Paper, Project, SiteConfig } from '@/lib/types';
 
@@ -34,6 +34,8 @@ interface SyncContextValue extends SyncState {
   publishAbout: (next: About) => Promise<void>;
   publishSite: (next: SiteConfig) => Promise<void>;
   refreshFromRepo: () => Promise<void>;
+  /** Upload a file to `public/<destDir>/<name>` and return the public path (`/destDir/name`). */
+  uploadAsset: (file: File, destDir: 'img' | 'models' | 'papers') => Promise<string>;
 }
 
 const SyncContext = createContext<SyncContextValue | null>(null);
@@ -188,6 +190,35 @@ export function SyncProvider({ children }: { children: React.ReactNode }) {
     [wrap, updateSite],
   );
 
+  const uploadAsset = useCallback(
+    async (file: File, destDir: 'img' | 'models' | 'papers'): Promise<string> => {
+      if (!token) throw new Error('Not signed in to GitHub.');
+      if (mode !== 'live') throw new Error('Switch to Live mode to upload.');
+      const safe = sanitizeFilename(file.name);
+      const stamp = Date.now().toString(36);
+      const filename = `${stamp}-${safe}`;
+      const repoPath = `public/${destDir}/${filename}`;
+      const publicPath = `/${destDir}/${filename}`;
+      setState((s) => ({ ...s, saving: true, error: null }));
+      try {
+        const bytes = await file.arrayBuffer();
+        const r = await putBinaryFile(token, repoPath, bytes, `upload: ${destDir}/${filename}`);
+        setState((s) => ({
+          ...s,
+          saving: false,
+          lastCommitSha: r.commitSha,
+          lastSavedAt: Date.now(),
+        }));
+        return publicPath;
+      } catch (e) {
+        const msg = errMsg(e, `Upload failed for ${file.name}`);
+        setState((s) => ({ ...s, saving: false, error: msg }));
+        throw new Error(msg);
+      }
+    },
+    [token, mode],
+  );
+
   const value = useMemo<SyncContextValue>(
     () => ({
       ...state,
@@ -196,8 +227,9 @@ export function SyncProvider({ children }: { children: React.ReactNode }) {
       publishAbout,
       publishSite,
       refreshFromRepo: doRefresh,
+      uploadAsset,
     }),
-    [state, publishProjects, publishPapers, publishAbout, publishSite, doRefresh],
+    [state, publishProjects, publishPapers, publishAbout, publishSite, doRefresh, uploadAsset],
   );
 
   // After a successful refresh, the localStorage patch is no longer needed —
@@ -215,6 +247,11 @@ export function useSync() {
   const ctx = useContext(SyncContext);
   if (!ctx) throw new Error('useSync must be used within SyncProvider');
   return ctx;
+}
+
+function sanitizeFilename(name: string): string {
+  const trimmed = name.replace(/[^a-zA-Z0-9._-]+/g, '-').replace(/^-+|-+$/g, '');
+  return trimmed.toLowerCase() || 'file';
 }
 
 function errMsg(e: unknown, fallback: string): string {

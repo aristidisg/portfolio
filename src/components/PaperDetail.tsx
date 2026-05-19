@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { useContent } from './ContentProvider';
 import { Prose } from './Prose';
+import { PdfViewer } from './PdfViewer';
 
 export function PaperDetail({ slug }: { slug: string }) {
   const { content } = useContent();
@@ -64,14 +65,16 @@ export function PaperDetail({ slug }: { slug: string }) {
         </div>
       )}
 
-      {(paper.pdf || (paper.links && paper.links.length > 0)) && (
-        <div className="mt-12 border-t border-paper-3/15 pt-8 flex flex-wrap gap-3">
-          {paper.pdf && (
-            <a href={paper.pdf} target="_blank" rel="noreferrer" className="btn-primary">
-              Download PDF ↓
-            </a>
-          )}
-          {paper.links?.map((l) => (
+      {paper.pdf && (
+        <div className="mt-12">
+          <p className="field-label">Full paper</p>
+          <PdfViewer src={paper.pdf} title={paper.title} />
+        </div>
+      )}
+
+      {paper.links && paper.links.length > 0 && (
+        <div className="mt-10 border-t border-paper-3/15 pt-8 flex flex-wrap gap-3">
+          {paper.links.map((l) => (
             <a key={l.url} href={l.url} target="_blank" rel="noreferrer" className="btn-ghost">
               {l.label} ↗
             </a>

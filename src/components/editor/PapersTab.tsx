@@ -6,11 +6,13 @@ import type { Paper } from '@/lib/types';
 import { ensureUniqueSlug, slugify } from '@/lib/slug';
 import { PaperForm } from './PaperForm';
 import { useSync } from './SyncProvider';
+import { useReorder } from './useReorder';
 
 export function PapersTab() {
   const { content } = useContent();
   const { publishPapers: updatePapers } = useSync();
   const [editingSlug, setEditingSlug] = useState<string | null>(null);
+  const { getItemProps, isDragging } = useReorder(content.papers, updatePapers);
 
   const editing = editingSlug
     ? content.papers.find((p) => p.slug === editingSlug) ?? null
@@ -57,16 +59,21 @@ export function PapersTab() {
     <div>
       <div className="flex items-center justify-between mb-4">
         <p className="text-paper-3 text-sm font-mono">
-          {content.papers.length} paper{content.papers.length === 1 ? '' : 's'}
+          {content.papers.length} paper{content.papers.length === 1 ? '' : 's'} · drag to reorder
         </p>
         <button onClick={addNew} className="btn-primary !py-2 !px-4 !text-[10px]">
           + New paper
         </button>
       </div>
 
-      <ul className="divide-y divide-paper-3/15 border-y border-paper-3/15">
-        {content.papers.map((p) => (
-          <li key={p.slug} className="py-3 flex items-center gap-3">
+      <ul className={`divide-y divide-paper-3/15 border-y border-paper-3/15 ${isDragging ? 'select-none' : ''}`}>
+        {content.papers.map((p, i) => (
+          <li
+            key={p.slug}
+            {...getItemProps(i)}
+            className="py-3 flex items-center gap-3 cursor-grab active:cursor-grabbing data-[dragging=true]:opacity-30 data-[drop-target=true]:bg-accent/10 transition"
+          >
+            <span className="text-paper-3 select-none" aria-hidden>⋮⋮</span>
             <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-paper-3 w-16 shrink-0">
               {p.year}
             </span>

@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import type { Project } from '@/lib/types';
 import { Checkbox, CSVField, LinksField, Select, TextArea, TextField } from './fields';
+import { FileUploadField } from './FileUploadField';
 
 export function ProjectForm({
   project,
@@ -96,11 +97,22 @@ export function ProjectForm({
         onChange={(v) => update('links', v)}
       />
 
-      <TextField
-        label="Cover image URL"
+      <FileUploadField
+        label="Cover image"
         value={draft.cover ?? ''}
         onChange={(v) => update('cover', v || undefined)}
-        placeholder="https://..."
+        accept="image/jpeg,image/png,image/webp,image/gif,image/avif"
+        destDir="img"
+        hint="/img/your-image.jpg"
+      />
+
+      <FileUploadField
+        label="3D model (.glb)"
+        value={draft.model3d ?? ''}
+        onChange={(v) => update('model3d', v || undefined)}
+        accept=".glb,.gltf,model/gltf-binary,model/gltf+json"
+        destDir="models"
+        hint="/models/your-model.glb"
       />
 
       <Checkbox

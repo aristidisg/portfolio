@@ -6,11 +6,13 @@ import type { Project } from '@/lib/types';
 import { ensureUniqueSlug, slugify } from '@/lib/slug';
 import { ProjectForm } from './ProjectForm';
 import { useSync } from './SyncProvider';
+import { useReorder } from './useReorder';
 
 export function ProjectsTab() {
   const { content } = useContent();
   const { publishProjects: updateProjects } = useSync();
   const [editingSlug, setEditingSlug] = useState<string | null>(null);
+  const { getItemProps, isDragging } = useReorder(content.projects, updateProjects);
 
   const editing = editingSlug
     ? content.projects.find((p) => p.slug === editingSlug) ?? null
@@ -22,7 +24,6 @@ export function ProjectsTab() {
         project={editing}
         onSave={(next) => {
           const others = content.projects.filter((p) => p.slug !== editing.slug);
-          // Re-slug only if title was changed but slug unchanged — keep slug stable
           updateProjects([...others, next]);
           setEditingSlug(next.slug);
         }}
@@ -66,16 +67,21 @@ export function ProjectsTab() {
     <div>
       <div className="flex items-center justify-between mb-4">
         <p className="text-paper-3 text-sm font-mono">
-          {content.projects.length} project{content.projects.length === 1 ? '' : 's'}
+          {content.projects.length} project{content.projects.length === 1 ? '' : 's'} · drag to reorder
         </p>
         <button onClick={addNew} className="btn-primary !py-2 !px-4 !text-[10px]">
           + New project
         </button>
       </div>
 
-      <ul className="divide-y divide-paper-3/15 border-y border-paper-3/15">
-        {content.projects.map((p) => (
-          <li key={p.slug} className="py-3 flex items-center gap-3">
+      <ul className={`divide-y divide-paper-3/15 border-y border-paper-3/15 ${isDragging ? 'select-none' : ''}`}>
+        {content.projects.map((p, i) => (
+          <li
+            key={p.slug}
+            {...getItemProps(i)}
+            className="py-3 flex items-center gap-3 cursor-grab active:cursor-grabbing data-[dragging=true]:opacity-30 data-[drop-target=true]:bg-accent/10 transition"
+          >
+            <span className="text-paper-3 select-none" aria-hidden>⋮⋮</span>
             <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-paper-3 w-16 shrink-0">
               {p.kind}
             </span>

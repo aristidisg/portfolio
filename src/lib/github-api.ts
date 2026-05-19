@@ -92,6 +92,62 @@ export async function putFile<T>(
   return { sha: json.content.sha, commitSha: json.commit.sha };
 }
 
+/**
+ * Upload a binary asset (image, 3D model, PDF, etc.) to the repo.
+ * Pass raw bytes — the function base64-encodes them.
+ * If a file already exists at `path` it will be overwritten (sha is auto-fetched).
+ */
+export async function putBinaryFile(
+  token: string,
+  path: string,
+  bytes: ArrayBuffer,
+  message: string,
+): Promise<{ sha: string; commitSha: string; htmlUrl: string }> {
+  // First check if file exists to get its sha
+  let existingSha: string | undefined;
+  try {
+    const res = await fetch(`${contentsUrl(path)}?ref=${REPO_CONFIG.branch}`, {
+      headers: headers(token),
+    });
+    if (res.ok) {
+      const j = (await res.json()) as { sha: string };
+      existingSha = j.sha;
+    }
+  } catch {
+    /* not found is fine */
+  }
+
+  const body: Record<string, unknown> = {
+    message,
+    content: bytesToBase64(bytes),
+    branch: REPO_CONFIG.branch,
+  };
+  if (existingSha) body.sha = existingSha;
+
+  const res = await fetch(contentsUrl(path), {
+    method: 'PUT',
+    headers: { ...headers(token), 'Content-Type': 'application/json' },
+    body: JSON.stringify(body),
+  });
+  const text = await res.text();
+  if (!res.ok) throw new GitHubApiError(res.status, text);
+  const json = JSON.parse(text) as {
+    content: { sha: string; html_url: string };
+    commit: { sha: string };
+  };
+  return { sha: json.content.sha, commitSha: json.commit.sha, htmlUrl: json.content.html_url };
+}
+
+function bytesToBase64(bytes: ArrayBuffer): string {
+  const u8 = new Uint8Array(bytes);
+  let bin = '';
+  const chunk = 0x8000;
+  for (let i = 0; i < u8.length; i += chunk) {
+    bin += String.fromCharCode.apply(null, Array.from(u8.subarray(i, i + chunk)));
+  }
+  return btoa(bin);
+}
+
 /** Validate a token by hitting /user. Returns the GitHub login on success. */
 export async function whoAmI(token: string): Promise<string> {
   const res = await fetch(`${API}/user`, { headers: headers(token) });

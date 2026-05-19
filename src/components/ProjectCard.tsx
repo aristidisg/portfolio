@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import type { Project } from '@/lib/types';
+import { Cover } from './Cover';
 
 const statusColors: Record<NonNullable<Project['status']>, string> = {
   shipped: 'text-accent',
@@ -24,14 +25,24 @@ export function ProjectCard({
       href={`/projects/${project.slug}/`}
       className="group relative block border-t border-paper-3/15 py-6 transition-colors hover:border-paper-0"
     >
-      <div className="grid grid-cols-12 gap-6 items-start">
+      <div className="grid grid-cols-12 gap-6 items-center">
         <div className="col-span-12 md:col-span-1">
           <span className="font-mono text-xs text-paper-3">
             {String(index + 1).padStart(2, '0')}
           </span>
         </div>
 
-        <div className="col-span-12 md:col-span-7">
+        <div className="col-span-12 md:col-span-3 lg:col-span-2">
+          <Cover
+            src={project.cover}
+            alt={project.title}
+            slug={project.slug}
+            aspect="aspect-[4/3]"
+            rounded="rounded-md"
+          />
+        </div>
+
+        <div className="col-span-12 md:col-span-5 lg:col-span-6">
           <div className="flex items-center gap-3 mb-2">
             <span className="badge-kind text-paper-3">
               <span className="text-accent text-base leading-none">{kindIcon}</span>
@@ -43,9 +54,10 @@ export function ProjectCard({
               </span>
             )}
             {isDraft && (
-              <span className="badge-kind text-accent-warm">
-                ◌ draft (local)
-              </span>
+              <span className="badge-kind text-accent-warm">◌ draft (local)</span>
+            )}
+            {project.model3d && (
+              <span className="badge-kind text-accent-cool" title="Has 3D model">⬢ 3D</span>
             )}
           </div>
 
@@ -57,21 +69,19 @@ export function ProjectCard({
           {project.tags.length > 0 && (
             <div className="mt-4 flex flex-wrap gap-1.5">
               {project.tags.slice(0, 5).map((t) => (
-                <span key={t} className="tag">
-                  {t}
-                </span>
+                <span key={t} className="tag">{t}</span>
               ))}
             </div>
           )}
         </div>
 
-        <div className="col-span-12 md:col-span-3 md:text-right">
+        <div className="col-span-6 md:col-span-2 md:text-right">
           <span className="font-mono text-xs text-paper-3 uppercase tracking-[0.2em]">
             {project.year}
           </span>
         </div>
 
-        <div className="col-span-12 md:col-span-1 md:text-right">
+        <div className="col-span-6 md:col-span-1 md:text-right">
           <span className="inline-block font-mono text-paper-3 group-hover:text-accent group-hover:translate-x-1 transition-all">
             →
           </span>

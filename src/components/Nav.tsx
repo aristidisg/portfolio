@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { useContent } from './ContentProvider';
+import { ThemeToggle } from './ThemeToggle';
 
 const links = [
   { href: '/', label: 'Index' },
@@ -59,31 +60,14 @@ export function Nav() {
           {open ? 'Close' : 'Menu'}
         </button>
 
-        <ul className="hidden md:flex items-center gap-1">
-          {links.map((l) => (
-            <li key={l.href}>
-              <Link
-                href={l.href}
-                className={`px-3 py-2 font-mono text-xs uppercase tracking-[0.2em] transition-colors ${
-                  isActive(l.href) ? 'text-accent' : 'text-paper-2 hover:text-paper-0'
-                }`}
-              >
-                {l.label}
-              </Link>
-            </li>
-          ))}
-        </ul>
-      </nav>
-
-      {open && (
-        <div className="md:hidden border-t border-paper-3/10 bg-ink-0/95 backdrop-blur-md">
-          <ul className="container-x py-4 flex flex-col gap-1">
+        <div className="hidden md:flex items-center gap-3">
+          <ul className="flex items-center gap-1">
             {links.map((l) => (
               <li key={l.href}>
                 <Link
                   href={l.href}
-                  className={`block py-3 font-mono text-sm uppercase tracking-[0.2em] ${
-                    isActive(l.href) ? 'text-accent' : 'text-paper-1'
+                  className={`px-3 py-2 font-mono text-xs uppercase tracking-[0.2em] transition-colors ${
+                    isActive(l.href) ? 'text-accent' : 'text-paper-2 hover:text-paper-0'
                   }`}
                 >
                   {l.label}
@@ -91,6 +75,31 @@ export function Nav() {
               </li>
             ))}
           </ul>
+          <ThemeToggle />
+        </div>
+      </nav>
+
+      {open && (
+        <div className="md:hidden border-t border-paper-3/10 bg-ink-0/95 backdrop-blur-md">
+          <div className="container-x py-4 flex flex-col gap-1">
+            <ul className="flex flex-col gap-1">
+              {links.map((l) => (
+                <li key={l.href}>
+                  <Link
+                    href={l.href}
+                    className={`block py-3 font-mono text-sm uppercase tracking-[0.2em] ${
+                      isActive(l.href) ? 'text-accent' : 'text-paper-1'
+                    }`}
+                  >
+                    {l.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+            <div className="pt-3 border-t border-paper-3/10">
+              <ThemeToggle />
+            </div>
+          </div>
         </div>
       )}
     </header>

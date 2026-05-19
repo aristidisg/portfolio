@@ -1,8 +1,19 @@
 'use client';
 
+import dynamic from 'next/dynamic';
 import Link from 'next/link';
 import { useContent } from './ContentProvider';
 import { Prose } from './Prose';
+import { Cover } from './Cover';
+
+const ModelViewer = dynamic(() => import('./ModelViewer').then((m) => m.ModelViewer), {
+  ssr: false,
+  loading: () => (
+    <div className="aspect-[16/10] rounded-lg bg-ink-2 flex items-center justify-center font-mono text-xs text-paper-3 uppercase tracking-[0.2em]">
+      Loading 3D viewer…
+    </div>
+  ),
+});
 
 export function ProjectDetail({ slug }: { slug: string }) {
   const { content } = useContent();
@@ -51,6 +62,22 @@ export function ProjectDetail({ slug }: { slug: string }) {
           {project.tags.map((t) => (
             <span key={t} className="tag">{t}</span>
           ))}
+        </div>
+      )}
+
+      <div className="mt-10">
+        <Cover
+          src={project.cover}
+          alt={project.title}
+          slug={project.slug}
+          aspect="aspect-[21/9]"
+        />
+      </div>
+
+      {project.model3d && (
+        <div className="mt-8">
+          <p className="field-label">3D model · drag to rotate · scroll to zoom</p>
+          <ModelViewer src={project.model3d} alt={`${project.title} 3D model`} />
         </div>
       )}
 

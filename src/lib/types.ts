@@ -16,6 +16,8 @@ export interface Project {
   tags: string[];
   links?: ProjectLink[];
   cover?: string;
+  /** Path or URL to a 3D model file. Best format: .glb (binary glTF). */
+  model3d?: string;
   status?: 'shipped' | 'wip' | 'archived' | 'concept';
   featured?: boolean;
 }

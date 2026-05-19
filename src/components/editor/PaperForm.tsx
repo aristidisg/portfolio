@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import type { Paper } from '@/lib/types';
 import { Checkbox, CSVField, LinksField, TextArea, TextField } from './fields';
+import { FileUploadField } from './FileUploadField';
 
 export function PaperForm({
   paper,
@@ -68,11 +69,13 @@ export function PaperForm({
         onChange={(v) => update('tags', v)}
       />
 
-      <TextField
-        label="PDF URL"
+      <FileUploadField
+        label="PDF file"
         value={draft.pdf ?? ''}
         onChange={(v) => update('pdf', v || undefined)}
-        placeholder="https://... or /papers/yours.pdf"
+        accept="application/pdf,.pdf"
+        destDir="papers"
+        hint="/papers/your-paper.pdf"
       />
 
       <LinksField
