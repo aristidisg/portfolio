@@ -1,21 +1,5 @@
 [
   {
-    "slug": "wearable-eeg-headband",
-    "title": "Wearable EEG Headband",
-    "kind": "hardware",
-    "year": "2024",
-    "tagline": "Dry-electrode 4-channel EEG with onboard ML inference.",
-    "summary": "A discreet headband that captures EEG without conductive gel and runs lightweight inference on-device for focus-state classification. Streams summaries — not raw signal — over BLE to preserve privacy.",
-    "tags": [
-      "BLE",
-      "DSP",
-      "Embedded ML",
-      "Wearable"
-    ],
-    "links": [],
-    "status": "wip"
-  },
-  {
     "slug": "pageant-static-search",
     "title": "Pageant",
     "kind": "software",
