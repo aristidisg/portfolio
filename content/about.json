@@ -1,14 +1,23 @@
 {
-  "name": "Your Name",
-  "pronouns": "they/them",
+  "name": "Aristidis G",
+  "pronouns": "he",
   "role": "Engineer & researcher",
   "location": "Earth",
   "bio": "I work at the seam of hardware and software — designing systems that have to survive both compilers and physics. This site collects what I've made: shipped products, research papers, and the experiments in between. Some things here are polished. Others are still smoking.",
   "email": "you@example.com",
   "socials": [
-    { "label": "GitHub", "url": "https://github.com/your-handle" },
-    { "label": "Scholar", "url": "https://scholar.google.com" },
-    { "label": "LinkedIn", "url": "https://linkedin.com/in/your-handle" }
+    {
+      "label": "GitHub",
+      "url": "https://github.com/your-handle"
+    },
+    {
+      "label": "Scholar",
+      "url": "https://scholar.google.com"
+    },
+    {
+      "label": "LinkedIn",
+      "url": "https://linkedin.com/in/your-handle"
+    }
   ],
   "resume": ""
 }
