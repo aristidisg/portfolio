@@ -16,7 +16,7 @@
  * client bundle. Anyone determined enough can find it. It's meant to keep
  * the editor UI out of view for casual visitors, not to protect data.
  */
-export const EDITOR_SECRET = 'letmein-2026';
+export const EDITOR_SECRET = 'dbtGI1x19GsOPNdb_H3xOpJ-';
 
 export const STORAGE_KEY = 'portfolio.editor.v1';
 export const UNLOCK_FLAG_KEY = 'portfolio.editor.unlocked.v1';
