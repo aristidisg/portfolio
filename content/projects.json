@@ -1,29 +1,5 @@
 [
   {
-    "slug": "weft-realtime-collab",
-    "title": "Weft",
-    "kind": "software",
-    "year": "2024",
-    "tagline": "Real-time collaborative editor with CRDT-backed offline support.",
-    "summary": "A document editor that stays usable offline and converges cleanly when you reconnect. Built on Yjs with a custom binding layer for rich-text and a Rust backend for persistence.",
-    "body": "## Why\n\nMost \"collaborative\" editors fall apart the moment your wifi drops. Weft treats offline as a first-class state, not an error.\n\n## How\n\nThe client is a thin React shell over a Yjs document. Edits propagate through a WebRTC mesh when peers are reachable, falling back to a Rust relay that buffers updates and forwards them on reconnect. The relay stores compressed snapshots in Postgres so cold starts are fast.\n\n## What I learned\n\nCRDTs are easy to reason about until you add formatting. Then they're hard. The fix was modeling marks as separate metadata streams instead of inline attributes.",
-    "tags": [
-      "TypeScript",
-      "Rust",
-      "CRDT",
-      "Yjs",
-      "WebRTC"
-    ],
-    "links": [
-      {
-        "label": "GitHub",
-        "url": "https://github.com/your-handle/weft"
-      }
-    ],
-    "status": "shipped",
-    "featured": true
-  },
-  {
     "slug": "wearable-eeg-headband",
     "title": "Wearable EEG Headband",
     "kind": "hardware",
